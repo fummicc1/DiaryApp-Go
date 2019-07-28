@@ -6,13 +6,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
 
 type Diary struct {
-	ID         string `json:"id" db:"id"`
+	gorm.Model
 	Title      string `json:"title" db:"title"`
 	Content    string `json:"content" db:"content"`
 	PosterName string `json:"posterName" db:"posterName"`
@@ -40,12 +39,6 @@ func NewRouter() *gin.Engine {
 		fmt.Println(c.GetHeader("Content-Type"))
 		err := c.BindJSON(&diary)
 		CheckErr(err)
-		uid, err := uuid.NewRandom()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		diary.ID = uid.String()
 		diary.CreatedAt = time.Now().Unix()
 		db.Create(&diary)
 		c.JSON(200, diary)
