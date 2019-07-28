@@ -10,9 +10,9 @@ import (
 
 type Diary struct {
 	gorm.Model
-	Title      string
-	Content    string
-	PosterName string
+	Title      string `json:"title"`
+	Content    string `json:"content"`
+	PosterName string `json:"posterName"`
 }
 
 var db *gorm.DB
