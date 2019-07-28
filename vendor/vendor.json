@@ -99,6 +99,12 @@
 			"revisionTime": "2018-07-18T01:23:57Z"
 		},
 		{
+			"checksumSHA1": "P1e3AR3oC4OKWfzbJ6kLCX/FRpo=",
+			"path": "github.com/rs/xid",
+			"revision": "ba6f703301d6c14cbc05faa3b512058f2304e16c",
+			"revisionTime": "2019-04-29T19:26:42Z"
+		},
+		{
 			"checksumSHA1": "uFz2Xig8LWOZ4dhBAzi6YD3AEcU=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e118e2d506a6b252f6b85f2e2f2ac1bfed82f1b8",
