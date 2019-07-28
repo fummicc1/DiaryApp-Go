@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/rs/xid"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -10,10 +13,11 @@ import (
 )
 
 type Diary struct {
-	gorm.Model
-	Title      string `json:"title" db:"title"`
-	Content    string `json:"content" db:"content"`
-	PosterName string `json:"poster_name" db:"poster_name"`
+	ID         string    `json:"id" db:"id" gorm:"primary_key"`
+	Title      string    `json:"title" db:"title"`
+	Content    string    `json:"content" db:"content"`
+	PosterName string    `json:"poster_name" db:"poster_name"`
+	CreatedAt  time.Time `json:"created_at" db:"created_at"`
 }
 
 var db *gorm.DB
@@ -35,6 +39,8 @@ func NewRouter() *gin.Engine {
 		var diary Diary
 		err := c.BindJSON(&diary)
 		CheckErr(err)
+		diary.CreatedAt = time.Now()
+		diary.ID = xid.New().String()
 		db.Create(&diary)
 		c.JSON(200, diary)
 	})
