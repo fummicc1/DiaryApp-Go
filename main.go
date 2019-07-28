@@ -23,9 +23,9 @@ func main() {
 	router := NewRouter()
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8090"
+		port = ":8090"
 	}
-	router.Run(port)
+	router.Run(":" + port)
 }
 
 func NewRouter() *gin.Engine {
