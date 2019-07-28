@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -15,11 +14,9 @@ type Diary struct {
 	Title      string `json:"title" db:"title"`
 	Content    string `json:"content" db:"content"`
 	PosterName string `json:"posterName" db:"posterName"`
-	CreatedAt  int64  `json:"createdAt" db:"createdAt"`
 }
 
 var db *gorm.DB
-var diaries []Diary
 
 func main() {
 	InitDB()
@@ -38,11 +35,11 @@ func NewRouter() *gin.Engine {
 		var diary Diary
 		err := c.BindJSON(&diary)
 		CheckErr(err)
-		diary.CreatedAt = time.Now().Unix()
 		db.Create(&diary)
 		c.JSON(200, diary)
 	})
 	r.GET("diary/load", func(c *gin.Context) {
+		var diaries []Diary
 		db.Find(&diaries)
 		c.JSON(200, diaries)
 	})
