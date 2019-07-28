@@ -10,9 +10,9 @@ import (
 
 type Diary struct {
 	gorm.Model
-	Title      string `json:"title"`
-	Content    string `json:"content"`
-	PosterName string `json:"posterName"`
+	Title      string `json:"title" db:"title"`
+	Content    string `json:"content" db:"content"`
+	PosterName string `json:"posterName" db:"posterName"`
 }
 
 var db *gorm.DB
@@ -32,7 +32,8 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 	r.POST("/diary/create", func(c *gin.Context) {
 		var diary Diary
-		c.BindJSON(&diary)
+		err := c.BindJSON(&diary)
+		CheckErr(err)
 		db.Create(&diary)
 		c.JSON(200, diary)
 	})
