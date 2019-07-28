@@ -26,7 +26,7 @@ func main() {
 	router := NewRouter()
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = ":8090"
+		port = "8090"
 	}
 	router.Run(":" + port)
 }
@@ -36,7 +36,6 @@ func NewRouter() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	r.POST("/diary/create", func(c *gin.Context) {
 		var diary Diary
-		fmt.Println(c.GetHeader("Content-Type"))
 		err := c.BindJSON(&diary)
 		CheckErr(err)
 		diary.CreatedAt = time.Now().Unix()
