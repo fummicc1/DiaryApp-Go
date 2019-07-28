@@ -34,6 +34,7 @@ func main() {
 
 func NewRouter() *gin.Engine {
 	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 	r.POST("/diary/create", func(c *gin.Context) {
 		var diary Diary
 		fmt.Println(c.GetHeader("Content-Type"))
@@ -72,8 +73,8 @@ func NewRouter() *gin.Engine {
 func InitDB() {
 	var err error
 	db, err = gorm.Open("postgres", os.Getenv("DATABASE_URL"))
-	CheckErr(err)
 	db.AutoMigrate(&Diary{})
+	CheckErr(err)
 }
 
 func CheckErr(err error) {
