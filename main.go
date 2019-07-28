@@ -13,11 +13,12 @@ import (
 )
 
 type Diary struct {
-	ID         string `json:"id" db:"id" gorm:"primary_key"`
-	Title      string `json:"title" db:"title"`
-	Content    string `json:"content" db:"content"`
-	PosterName string `json:"poster_name" db:"poster_name"`
-	CreatedAt  string `json:"created_at" db:"created_at"`
+	ID                  string `json:"id" db:"id" gorm:"primary_key"`
+	Title               string `json:"title" db:"title"`
+	Content             string `json:"content" db:"content"`
+	PosterName          string `json:"poster_name" db:"poster_name"`
+	DemandDeletionCount int    `json:"demend_deletion_count"`
+	CreatedAt           string `json:"created_at" db:"created_at"`
 }
 
 var db *gorm.DB
@@ -61,8 +62,13 @@ func NewRouter() *gin.Engine {
 		id := c.Param("id")
 		var diary Diary
 		db.Find(&diary, "id=?", id)
-		db.Delete(&diary)
-		c.String(200, "Diary(id=?) Delete!", id)
+		diary.DemandDeletionCount += 1
+		if diary.DemandDeletionCount > 10 {
+			db.Delete(&diary)
+		} else {
+			db.Save(&diary)
+		}
+		c.String(200, " Delete Request for This Diary Sent.", id)
 	})
 	return r
 }
