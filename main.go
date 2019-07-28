@@ -60,7 +60,6 @@ func NewRouter() *gin.Engine {
 func InitDB() {
 	var err error
 	db, err = gorm.Open("postgres", os.Getenv("DATABASE_URL"))
-	defer db.Close()
 	CheckErr(err)
 	db.AutoMigrate(&Diary{})
 }
