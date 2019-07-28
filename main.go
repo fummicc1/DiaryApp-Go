@@ -13,7 +13,7 @@ type Diary struct {
 	gorm.Model
 	Title      string `json:"title" db:"title"`
 	Content    string `json:"content" db:"content"`
-	PosterName string `json:"posterName" db:"posterName"`
+	PosterName string `json:"poster_name" db:"poster_name"`
 }
 
 var db *gorm.DB
