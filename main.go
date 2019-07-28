@@ -41,7 +41,7 @@ func NewRouter() *gin.Engine {
 		CheckErr(err)
 		currentTime := time.Now()
 		currentTime.In(time.Local)
-		diary.CreatedAt = currentTime.String()
+		diary.CreatedAt = currentTime.Format("2006/01/02")
 		diary.ID = xid.New().String()
 		db.Create(&diary)
 		c.JSON(200, diary)
