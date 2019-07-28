@@ -47,6 +47,7 @@ func NewRouter() *gin.Engine {
 	r.GET("diary/load", func(c *gin.Context) {
 		var diaries []Diary
 		db.Find(&diaries)
+		fmt.Println(diaries)
 		c.JSON(200, diaries)
 	})
 	r.GET("diary/load/:id", func(c *gin.Context) {
