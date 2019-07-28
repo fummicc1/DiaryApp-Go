@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -32,6 +33,7 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 	r.POST("/diary/create", func(c *gin.Context) {
 		var diary Diary
+		fmt.Println(c.GetHeader("Content-Type"))
 		err := c.BindJSON(&diary)
 		CheckErr(err)
 		db.Create(&diary)
