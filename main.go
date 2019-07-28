@@ -39,7 +39,9 @@ func NewRouter() *gin.Engine {
 		var diary Diary
 		err := c.BindJSON(&diary)
 		CheckErr(err)
-		diary.CreatedAt = time.Now().Format("2019/07/08")
+		currentTime := time.Now()
+		currentTime.In(time.Local)
+		diary.CreatedAt = currentTime.String()
 		diary.ID = xid.New().String()
 		db.Create(&diary)
 		c.JSON(200, diary)
